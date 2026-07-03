@@ -1,0 +1,12 @@
+node_modules/
+dist/
+build/
+*.tsbuildinfo
+.env
+.env.local
+apps/api/uploads/
+apps/api/prisma/dev.db
+npm-debug.log*
+.DS_Store
+Thumbs.db
+.claude/settings.local.json

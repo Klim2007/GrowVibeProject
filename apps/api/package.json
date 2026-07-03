@@ -1,0 +1,39 @@
+{
+  "name": "api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev"
+  },
+  "dependencies": {
+    "scenario-schema": "*",
+    "scorm-export": "*",
+    "@prisma/client": "^5.22.0",
+    "express": "^4.21.1",
+    "multer": "^2.0.0",
+    "file-type": "^22.0.1",
+    "sanitize-html": "^2.13.1",
+    "sharp": "^0.33.5",
+    "zod": "^3.23.8",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "prisma": "^5.22.0",
+    "typescript": "^5.6.3",
+    "tsx": "^4.19.2",
+    "vitest": "^3.2.6",
+    "@types/express": "^4.17.21",
+    "@types/multer": "^2.2.0",
+    "@types/sanitize-html": "^2.13.0",
+    "@types/cors": "^2.8.17",
+    "@types/node": "^22.9.0"
+  }
+}

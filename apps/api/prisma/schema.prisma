@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TrainerStatus {
+  draft
+  published
+}
+
+enum HotspotType {
+  click
+  input
+}
+
+enum MatchType {
+  exact
+  regex
+  nonEmpty
+}
+
+model Trainer {
+  id           String        @id @default(cuid())
+  title        String
+  language     String        @default("ru")
+  passingScore Int           @default(80) @map("passing_score")
+  scormVersion String        @default("1.2") @map("scorm_version")
+  status       TrainerStatus @default(draft)
+  createdAt    DateTime      @default(now()) @map("created_at")
+  updatedAt    DateTime      @updatedAt @map("updated_at")
+  screens      Screen[]
+
+  @@map("trainers")
+}
+
+model Screen {
+  id        String    @id @default(cuid())
+  trainerId String    @map("trainer_id")
+  trainer   Trainer   @relation(fields: [trainerId], references: [id], onDelete: Cascade)
+  imageUrl  String    @map("image_url")
+  order     Int
+  narration String?
+  slug      String?
+  hotspots  Hotspot[]
+
+  @@index([trainerId, order])
+  @@map("screens")
+}
+
+model Hotspot {
+  id     String      @id @default(cuid())
+  screenId String    @map("screen_id")
+  screen Screen      @relation(fields: [screenId], references: [id], onDelete: Cascade)
+  type   HotspotType
+  order  Int         @default(0)
+  slug   String?
+
+  regionX      Float @map("region_x")
+  regionY      Float @map("region_y")
+  regionWidth  Float @map("region_width")
+  regionHeight Float @map("region_height")
+
+  // expected_value (input hotspots only; null for click)
+  matchType  MatchType? @map("match_type")
+  matchValue String?    @map("match_value")
+
+  // on_success
+  nextScreenId String? @map("next_screen_id")
+  successScore Int     @default(0) @map("success_score")
+
+  // on_error
+  errorHint  String? @map("error_hint")
+  errorRetry Boolean @default(true) @map("error_retry")
+
+  @@index([screenId])
+  @@map("hotspots")
+}

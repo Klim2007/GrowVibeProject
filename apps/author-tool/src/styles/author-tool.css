@@ -1,0 +1,424 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  background: #f4f5f7;
+  color: #1b1d21;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+.page-status {
+  padding: 24px;
+  color: #666;
+}
+
+/* Project list */
+
+.project-list-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+.project-list-page__create {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.project-list-page__create input {
+  flex: 1;
+  padding: 8px;
+}
+
+.project-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.project-list__item {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  text-align: left;
+}
+
+.project-list__status {
+  color: #888;
+  font-size: 0.85rem;
+}
+
+/* Editor page */
+
+.editor-page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-page__toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 16px;
+  background: white;
+  border-bottom: 1px solid #ddd;
+}
+
+.editor-page__title {
+  flex: 1;
+  font-size: 1.1rem;
+  padding: 6px;
+  border: 1px solid transparent;
+}
+
+.editor-page__title:hover, .editor-page__title:focus {
+  border-color: #ccc;
+}
+
+.draw-type-toggle {
+  display: flex;
+  gap: 4px;
+}
+
+.editor-page__body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 160px 1fr 300px;
+  overflow: hidden;
+}
+
+.editor-page__canvas-area {
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.editor-page__inspector {
+  border-left: 1px solid #ddd;
+  padding: 16px;
+  overflow-y: auto;
+  background: white;
+}
+
+/* Screen list */
+
+.screen-list {
+  border-right: 1px solid #ddd;
+  padding: 8px;
+  overflow-y: auto;
+  background: white;
+}
+
+.screen-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.screen-list__item {
+  position: relative;
+  border: 2px solid transparent;
+  border-radius: 4px;
+}
+
+.screen-list__item--selected {
+  border-color: #4fa3ff;
+}
+
+.screen-list__thumb {
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  position: relative;
+}
+
+.screen-list__thumb img {
+  width: 100%;
+  display: block;
+  border-radius: 4px;
+}
+
+.screen-list__thumb span {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  font-size: 0.75rem;
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+
+.screen-list__delete {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  border: none;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  line-height: 1;
+}
+
+.upload-dropzone {
+  margin-top: 8px;
+  border: 2px dashed #bbb;
+  border-radius: 6px;
+  padding: 12px 8px;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.upload-dropzone--active {
+  border-color: #4fa3ff;
+  color: #4fa3ff;
+}
+
+/* Hotspot canvas */
+
+.hotspot-canvas {
+  position: relative;
+  width: 100%;
+  line-height: 0;
+}
+
+.hotspot-canvas__image {
+  width: 100%;
+  display: block;
+  user-select: none;
+}
+
+.hotspot-canvas__overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+.hotspot-canvas__overlay--drawing {
+  cursor: crosshair;
+}
+
+.hotspot-canvas__rect {
+  fill: rgba(255, 210, 0, 0.2);
+  stroke: rgba(255, 180, 0, 0.9);
+  stroke-width: 2;
+  cursor: move;
+}
+
+.hotspot-canvas__rect--selected {
+  fill: rgba(79, 163, 255, 0.25);
+  stroke: #4fa3ff;
+}
+
+.hotspot-canvas__draft {
+  fill: rgba(79, 163, 255, 0.2);
+  stroke: #4fa3ff;
+  stroke-width: 2;
+  stroke-dasharray: 4;
+}
+
+/* Hotspot list / inspector */
+
+.hotspot-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.hotspot-list__item {
+  padding: 4px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+}
+
+.hotspot-list__item--selected {
+  border-color: #4fa3ff;
+  background: #eaf3ff;
+}
+
+.hotspot-inspector__empty, .hotspot-list__empty {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 10px;
+  font-size: 0.85rem;
+}
+
+.field--inline {
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+}
+
+.field input, .field select, .field textarea {
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font: inherit;
+}
+
+.field-group {
+  border: 1px solid #e2e2e2;
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+}
+
+.field-group legend {
+  font-size: 0.8rem;
+  color: #666;
+  padding: 0 4px;
+}
+
+.button {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+}
+
+.button--active {
+  background: #4fa3ff;
+  border-color: #4fa3ff;
+  color: white;
+}
+
+.button--danger {
+  border-color: #e05c5c;
+  color: #e05c5c;
+}
+
+/* Preview modal */
+
+.preview-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.preview-modal__panel {
+  background: #1b1d21;
+  color: #f2f2f2;
+  width: min(900px, 92vw);
+  height: min(700px, 88vh);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.preview-modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.preview-modal__error {
+  color: #ff8a80;
+}
+
+.preview-modal__finished {
+  margin: auto;
+  font-size: 1.2rem;
+}
+
+.preview-modal__screen {
+  flex: 1;
+  min-height: 0;
+}
+
+.preview-modal__hint {
+  min-height: 1.4em;
+  color: #ff8a80;
+  font-size: 0.9rem;
+}
+
+/* Shared classes emitted by player-core's ScreenRenderer, reused verbatim
+   here so the preview is visually identical to the real Runtime Player. */
+
+.gv-screen, .gv-screen__wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.gv-screen__wrapper {
+  background: #000;
+}
+
+.gv-screen__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.gv-screen__overlay {
+  position: absolute;
+}
+
+.gv-hotspot {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border: 2px solid rgba(255, 210, 0, 0.9);
+  background: rgba(255, 210, 0, 0.15);
+  cursor: pointer;
+  font-size: 0;
+  padding: 0;
+}
+
+.gv-hotspot--input {
+  font-size: 14px;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.toolbar-error {
+  color: #e05c5c;
+  font-size: 0.8rem;
+}

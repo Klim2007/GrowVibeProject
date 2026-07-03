@@ -40,3 +40,13 @@ export function uploadAsset(trainerId: string, file: File): Promise<{ url: strin
   form.append("image", file);
   return apiPost(`/api/trainers/${trainerId}/assets`, form);
 }
+
+export interface ExportResultDto {
+  downloadUrl: string;
+  sizeBytes: number;
+  warnings: string[];
+}
+
+export function exportTrainerToScorm(trainerId: string): Promise<ExportResultDto> {
+  return apiPost(`/api/trainers/${trainerId}/export`);
+}

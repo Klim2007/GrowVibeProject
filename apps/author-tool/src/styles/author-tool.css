@@ -422,3 +422,8 @@ button {
   color: #e05c5c;
   font-size: 0.8rem;
 }
+
+.toolbar-warning {
+  color: #b8860b;
+  font-size: 0.8rem;
+}

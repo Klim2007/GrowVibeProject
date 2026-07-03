@@ -114,11 +114,15 @@ export function HotspotInspector({ trainer }: Props) {
             }
           >
             <option value="">— конец тренажёра —</option>
-            {trainer.screens.map((screen) => (
-              <option key={screen.id} value={screen.id}>
-                {screen.slug ?? screen.id.slice(0, 8)}
-              </option>
-            ))}
+            {trainer.screens
+              // A hotspot can't link to the screen it's already on — that
+              // creates a dead loop the learner can never progress past.
+              .filter((screen) => screen.id !== hotspot!.screenId)
+              .map((screen) => (
+                <option key={screen.id} value={screen.id}>
+                  {screen.slug ?? `Экран ${trainer.screens.indexOf(screen) + 1}`}
+                </option>
+              ))}
           </select>
         </label>
         <label className="field">

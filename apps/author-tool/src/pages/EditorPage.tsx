@@ -5,6 +5,7 @@ import { HotspotList } from "../components/HotspotEditor/HotspotList.js";
 import { PreviewModal } from "../components/Preview/PreviewModal.js";
 import { ScreenList } from "../components/ScreenList/ScreenList.js";
 import { ExportJsonButton } from "../components/Toolbar/ExportJsonButton.js";
+import { ExportScormButton } from "../components/Toolbar/ExportScormButton.js";
 import { ImportJsonButton } from "../components/Toolbar/ImportJsonButton.js";
 import { useEditorStore } from "../store/editor-store.js";
 import { useTrainerStore } from "../store/trainer-store.js";
@@ -82,6 +83,7 @@ export function EditorPage({ trainerId, onBack }: Props) {
         </button>
         <ExportJsonButton trainerId={trainer.id} trainerTitle={trainer.title} />
         <ImportJsonButton trainerId={trainer.id} onImported={() => void loadTrainer(trainerId)} />
+        <ExportScormButton trainerId={trainer.id} />
       </header>
 
       {previewOpen && <PreviewModal trainer={trainer} onClose={() => setPreviewOpen(false)} />}

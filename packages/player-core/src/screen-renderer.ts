@@ -7,6 +7,7 @@ export interface ScreenRendererCallbacks {
 }
 
 export class ScreenRenderer {
+  private readonly container: HTMLElement;
   private readonly wrapper: HTMLDivElement;
   private readonly imgEl: HTMLImageElement;
   private readonly overlayEl: HTMLDivElement;
@@ -15,6 +16,7 @@ export class ScreenRenderer {
 
   constructor(container: HTMLElement, callbacks: ScreenRendererCallbacks) {
     this.callbacks = callbacks;
+    this.container = container;
 
     container.innerHTML = "";
     container.classList.add("gv-screen");
@@ -25,7 +27,18 @@ export class ScreenRenderer {
     this.imgEl = document.createElement("img");
     this.imgEl.className = "gv-screen__image";
     this.imgEl.alt = "";
-    this.imgEl.addEventListener("load", () => this.layout());
+    this.imgEl.addEventListener("load", () => {
+      // Size the container to the image's own aspect ratio (clamped by its
+      // CSS max-height) so screenshots aren't letterboxed by default — the
+      // contain-rect math below still runs to keep hotspots correctly
+      // aligned in the cases where the clamp does force a mismatch. A
+      // pre-load CSS min-height keeps the layout from collapsing before we
+      // know the image's dimensions, but it must be cleared here or it can
+      // out-clamp the aspect-ratio for wide images in a narrow container.
+      this.container.style.minHeight = "0";
+      this.container.style.aspectRatio = `${this.imgEl.naturalWidth} / ${this.imgEl.naturalHeight}`;
+      this.layout();
+    });
 
     this.overlayEl = document.createElement("div");
     this.overlayEl.className = "gv-screen__overlay";
